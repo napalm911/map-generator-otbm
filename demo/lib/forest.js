@@ -6,6 +6,10 @@ function randomElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
+function randomTree() {
+  return TREE_IDS[Math.floor(Math.random() * TREE_IDS.length)];
+}
+
 function addTree(tile) {
   tile.items.push({
     type: otbm2json.HEADERS.OTBM_ITEM,
