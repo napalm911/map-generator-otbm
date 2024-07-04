@@ -1,5 +1,4 @@
 function generateMaze(width, height, pathWidth) {
-  // Initialize the maze map with walls (1)
   let maze = Array.from({ length: width }, () => Array(height).fill(1));
 
   function carve(x, y) {
@@ -21,8 +20,8 @@ function generateMaze(width, height, pathWidth) {
         const my = cy + dy / 2;
 
         if (nx >= 0 && ny >= 0 && nx < width && ny < height && maze[nx][ny] === 1) {
-          for (let i = 0; i <= pathWidth; i++) {
-            for (let j = 0; j <= pathWidth; j++) {
+          for (let i = 0; i < pathWidth; i++) {
+            for (let j = 0; j < pathWidth; j++) {
               if (cx + i < width && cy + j < height) {
                 maze[cx + i][cy + j] = 0;
               }
@@ -44,14 +43,16 @@ function generateMaze(width, height, pathWidth) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
-      }
+    }
   }
 
-  // Start carving from the top-left corner of the maze
   maze[pathWidth][pathWidth] = 0;
   carve(pathWidth, pathWidth);
 
-  return maze;
+  const start = [pathWidth, pathWidth];
+  const end = [width - pathWidth - 1, height - pathWidth - 1];
+
+  return { maze, start, end };
 }
 
 module.exports = {
