@@ -1,3 +1,7 @@
+# otbm
+*.otbm
+*.json
+
 # python
 
 __pycache__
