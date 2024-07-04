@@ -1,4 +1,4 @@
-name: "ekam chat test lint format and build"
+name: "test lint format and build"
 on:
   pull_request:
     branches:
