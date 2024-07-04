@@ -9,7 +9,7 @@ function randomElement(array) {
 function addMountain(tile, id) {
   tile.items.push({
     type: otbm2json.HEADERS.OTBM_ITEM,
-    id: id
+    id: id,
   });
 }
 
@@ -20,17 +20,26 @@ function addMountainBorder(tileAreas, x, y, id, mapWidth, mapHeight) {
       x: x % 256,
       y: y % 256,
       tileid: GRASS_TILE,
-      items: []
+      items: [],
     };
     addMountain(tile, id);
     tileAreas.push(tile);
   }
 }
 
-function generateMountain(xChunk, yChunk, mapWidth, mapHeight, zLevel, tileAreas) {
+function generateMountain(
+  xChunk,
+  yChunk,
+  mapWidth,
+  mapHeight,
+  zLevel,
+  tileAreas,
+) {
   const mountainMinSize = 5;
   const mountainMaxSize = 20;
-  const size = mountainMinSize + Math.floor(Math.random() * (mountainMaxSize - mountainMinSize));
+  const size =
+    mountainMinSize +
+    Math.floor(Math.random() * (mountainMaxSize - mountainMinSize));
   const startX = Math.max(xChunk, 0);
   const startY = Math.max(yChunk, 0);
   const endX = Math.min(xChunk + size, mapWidth);
@@ -46,7 +55,7 @@ function generateMountain(xChunk, yChunk, mapWidth, mapHeight, zLevel, tileAreas
         x: tileX,
         y: tileY,
         tileid: GRASS_TILE, // Set grass tile
-        items: []
+        items: [],
       };
 
       // Determine the appropriate mountain tile based on position

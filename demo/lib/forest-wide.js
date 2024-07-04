@@ -9,7 +9,7 @@ function randomElement(array) {
 function addTree(tile) {
   tile.items.push({
     type: otbm2json.HEADERS.OTBM_ITEM,
-    id: randomElement(TREE_IDS)
+    id: randomElement(TREE_IDS),
   });
 }
 

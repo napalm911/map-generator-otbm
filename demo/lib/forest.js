@@ -13,7 +13,7 @@ function randomTree() {
 function addTree(tile) {
   tile.items.push({
     type: otbm2json.HEADERS.OTBM_ITEM,
-    id: randomElement(TREE_IDS)
+    id: randomElement(TREE_IDS),
   });
 }
 
@@ -25,5 +25,5 @@ function generateForest(tile, mazeMap, tileX, tileY) {
 
 module.exports = {
   generateForest,
-  randomTree
+  randomTree,
 };

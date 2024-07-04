@@ -35,7 +35,16 @@ function addBorder(tileAreas, x, y, id, mapWidth, mapHeight) {
   }
 }
 
-function generateTileArea(xChunk, yChunk, chunkSize, mapWidth, mapHeight, zLevel, mazeMap, path) {
+function generateTileArea(
+  xChunk,
+  yChunk,
+  chunkSize,
+  mapWidth,
+  mapHeight,
+  zLevel,
+  mazeMap,
+  path,
+) {
   const tileArea = {
     type: otbm2json.HEADERS.OTBM_TILE_AREA,
     x: xChunk,
@@ -59,7 +68,11 @@ function generateTileArea(xChunk, yChunk, chunkSize, mapWidth, mapHeight, zLevel
         };
 
         // Place dirt tiles on the path
-        if (path.some(([px, py]) => Math.abs(px - tileX) < 2 && Math.abs(py - tileY) < 2)) {
+        if (
+          path.some(
+            ([px, py]) => Math.abs(px - tileX) < 2 && Math.abs(py - tileY) < 2,
+          )
+        ) {
           tile.tileid = DIRT_TILE;
         } else {
           // Block paths with trees
@@ -105,7 +118,14 @@ function generateTileArea(xChunk, yChunk, chunkSize, mapWidth, mapHeight, zLevel
         }
 
         if (borderId) {
-          addBorder(tileArea.tiles, borderX, borderY, borderId, mapWidth, mapHeight);
+          addBorder(
+            tileArea.tiles,
+            borderX,
+            borderY,
+            borderId,
+            mapWidth,
+            mapHeight,
+          );
         }
       }
     }
@@ -130,8 +150,12 @@ function generateTileArea(xChunk, yChunk, chunkSize, mapWidth, mapHeight, zLevel
   treeCages.forEach((cage) => {
     const [hx, hy] = cage[Math.floor(Math.random() * cage.length)];
     const [ohx, ohy] = cage[Math.floor(Math.random() * cage.length)];
-    const tileHole = tileArea.tiles.find((tile) => tile.x === hx % 256 && tile.y === hy % 256);
-    const tileOpenHole = tileArea.tiles.find((tile) => tile.x === ohx % 256 && tile.y === ohy % 256);
+    const tileHole = tileArea.tiles.find(
+      (tile) => tile.x === hx % 256 && tile.y === hy % 256,
+    );
+    const tileOpenHole = tileArea.tiles.find(
+      (tile) => tile.x === ohx % 256 && tile.y === ohy % 256,
+    );
     if (tileHole) {
       tileHole.items.push({
         type: otbm2json.HEADERS.OTBM_ITEM,
@@ -163,14 +187,34 @@ function generateMazePaths(mapWidth, mapHeight, pathWidth) {
   return { maze, path, start, end };
 }
 
-function generateTerrain(mapData, zLevels, chunkSize, mapWidth, mapHeight, pathWidth) {
+function generateTerrain(
+  mapData,
+  zLevels,
+  chunkSize,
+  mapWidth,
+  mapHeight,
+  pathWidth,
+) {
   let tileAreas = [];
 
   zLevels.forEach((zLevel) => {
-    const { maze, path, start, end } = generateMazePaths(mapWidth, mapHeight, pathWidth);
+    const { maze, path, start, end } = generateMazePaths(
+      mapWidth,
+      mapHeight,
+      pathWidth,
+    );
     for (let xChunk = 0; xChunk < mapWidth; xChunk += chunkSize) {
       for (let yChunk = 0; yChunk < mapHeight; yChunk += chunkSize) {
-        const tileArea = generateTileArea(xChunk, yChunk, chunkSize, mapWidth, mapHeight, zLevel, maze, path);
+        const tileArea = generateTileArea(
+          xChunk,
+          yChunk,
+          chunkSize,
+          mapWidth,
+          mapHeight,
+          zLevel,
+          maze,
+          path,
+        );
         tileAreas.push(tileArea);
       }
     }
@@ -179,14 +223,23 @@ function generateTerrain(mapData, zLevels, chunkSize, mapWidth, mapHeight, pathW
   return tileAreas;
 }
 
-
 const mapData = otbm2json.read("lava.otbm");
 const chunkSize = 256;
-const newTileAreas = generateTerrain(mapData, zLevels, chunkSize, mapWidth, mapHeight, pathWidth);
+const newTileAreas = generateTerrain(
+  mapData,
+  zLevels,
+  chunkSize,
+  mapWidth,
+  mapHeight,
+  pathWidth,
+);
 
 mapData.data.nodes.forEach(function (node) {
   node.features = node.features.filter((feature) => {
-    return !(feature.type === otbm2json.HEADERS.OTBM_TILE_AREA && zLevels.includes(feature.z));
+    return !(
+      feature.type === otbm2json.HEADERS.OTBM_TILE_AREA &&
+      zLevels.includes(feature.z)
+    );
   });
 
   node.features = node.features.concat(newTileAreas);

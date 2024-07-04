@@ -11,5 +11,5 @@ module.exports = {
   GRASS_TILE,
   JUNGLE_GRASS_TILE,
   ROCKS_TILE,
-  BROWN_SAND_TILE
+  BROWN_SAND_TILE,
 };

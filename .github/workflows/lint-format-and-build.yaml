@@ -1,0 +1,94 @@
+name: "ekam chat test lint format and build"
+on:
+  pull_request:
+    branches:
+      - main
+      - prod
+    paths:
+      - ".github/workflows/demo*"
+      - "demo/**"
+
+jobs:
+  run-unit-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          cache: "npm"
+          cache-dependency-path: "demo/package-lock.json"
+
+      - name: Install dependencies
+        working-directory: ./demo
+        run: make clean-install
+
+      - name: Test code
+        working-directory: ./demo
+        run: make test
+
+  run-lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          cache: "npm"
+          cache-dependency-path: "demo/package-lock.json"
+
+      - name: Install dependencies
+        working-directory: ./demo
+        run: make clean-install
+
+      - name: Lint code
+        working-directory: ./demo
+        run: make lint
+
+  run-format:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          cache: "npm"
+          cache-dependency-path: "demo/package-lock.json"
+
+      - name: Install dependencies
+        working-directory: ./demo
+        run: make clean-install
+
+      - name: Lint code
+        working-directory: ./demo
+        run: make format-check
+
+  run-build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          cache: "npm"
+          cache-dependency-path: "demo/package-lock.json"
+
+      - name: Install dependencies
+        working-directory: ./demo
+        run: make clean-install
+
+      - name: Build code
+        working-directory: ./demo
+        run: make build

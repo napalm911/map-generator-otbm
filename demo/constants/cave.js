@@ -37,5 +37,5 @@ module.exports = {
   EARTH,
   LAVA,
   WATER,
-  VOID
+  VOID,
 };

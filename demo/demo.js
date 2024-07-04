@@ -1,6 +1,5 @@
 const otbm2json = require("./lib/otbm2json");
 
-
 const WHITE_TILE = 406;
 const BLACK_TILE = 407;
 
@@ -12,12 +11,10 @@ const mapWidth = mapData.data.mapWidth;
 const mapHeight = mapData.data.mapHeight;
 
 // Go over all nodes
-mapData.data.nodes.forEach(function(node) {
-
-  node.features.forEach(function(feature) {
-    
+mapData.data.nodes.forEach(function (node) {
+  node.features.forEach(function (feature) {
     // Skip anything that is not a tile area
-    if (feature.type !== otbm2json.HEADERS.OTBM_TILE_AREA) return; 
+    if (feature.type !== otbm2json.HEADERS.OTBM_TILE_AREA) return;
 
     // Create a new array for tiles
     feature.tiles = [];
@@ -31,14 +28,13 @@ mapData.data.nodes.forEach(function(node) {
             type: otbm2json.HEADERS.OTBM_TILE,
             x: x,
             y: y,
-            tileid: (x & 1 ^ y & 1) ? BLACK_TILE : WHITE_TILE
+            tileid: (x & 1) ^ (y & 1) ? BLACK_TILE : WHITE_TILE,
           };
           feature.tiles.push(tile);
         }
       }
     }
   });
-
 });
 
 // Write the output to OTBM using the library

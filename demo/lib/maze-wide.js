@@ -8,7 +8,10 @@ function generateMaze(width, height, pathWidth) {
     while (stack.length > 0) {
       const [cx, cy] = stack.pop();
       const directions = [
-        [-pathWidth * 2, 0], [pathWidth * 2, 0], [0, -pathWidth * 2], [0, pathWidth * 2]
+        [-pathWidth * 2, 0],
+        [pathWidth * 2, 0],
+        [0, -pathWidth * 2],
+        [0, pathWidth * 2],
       ];
 
       shuffle(directions);
@@ -19,7 +22,13 @@ function generateMaze(width, height, pathWidth) {
         const mx = cx + dx / 2;
         const my = cy + dy / 2;
 
-        if (nx >= 0 && ny >= 0 && nx < width && ny < height && maze[nx][ny] === 1) {
+        if (
+          nx >= 0 &&
+          ny >= 0 &&
+          nx < width &&
+          ny < height &&
+          maze[nx][ny] === 1
+        ) {
           for (let i = 0; i < pathWidth; i++) {
             for (let j = 0; j < pathWidth; j++) {
               if (cx + i < width && cy + j < height) {

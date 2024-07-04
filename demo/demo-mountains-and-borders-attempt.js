@@ -12,13 +12,21 @@ const numberOfSteps = 5;
 const mapWidth = 512; // Change as needed
 const mapHeight = 512; // Change as needed
 
-function generateTileArea(xChunk, yChunk, chunkSize, mapWidth, mapHeight, zLevel, caveMap) {
+function generateTileArea(
+  xChunk,
+  yChunk,
+  chunkSize,
+  mapWidth,
+  mapHeight,
+  zLevel,
+  caveMap,
+) {
   const tileArea = {
     type: otbm2json.HEADERS.OTBM_TILE_AREA,
     x: xChunk,
     y: yChunk,
     z: zLevel,
-    tiles: []
+    tiles: [],
   };
 
   for (let x = 0; x < chunkSize; x++) {
@@ -32,7 +40,7 @@ function generateTileArea(xChunk, yChunk, chunkSize, mapWidth, mapHeight, zLevel
           x: tileX % 256,
           y: tileY % 256,
           tileid: GRASS_TILE,
-          items: []
+          items: [],
         };
 
         generateForest(tile, caveMap, tileX, tileY);
@@ -55,11 +63,27 @@ function generateTerrain(mapData, zLevel, chunkSize, mapWidth, mapHeight) {
 
   for (let xChunk = 0; xChunk < mapWidth; xChunk += chunkSize) {
     for (let yChunk = 0; yChunk < mapHeight; yChunk += chunkSize) {
-      const tileArea = generateTileArea(xChunk, yChunk, chunkSize, mapWidth, mapHeight, zLevel, caveMap);
+      const tileArea = generateTileArea(
+        xChunk,
+        yChunk,
+        chunkSize,
+        mapWidth,
+        mapHeight,
+        zLevel,
+        caveMap,
+      );
       tileAreas.push(tileArea);
 
-      if (Math.random() < 0.25) { // Adjust this value to control mountain density
-        generateMountain(xChunk, yChunk, mapWidth, mapHeight, zLevel, tileArea.tiles);
+      if (Math.random() < 0.25) {
+        // Adjust this value to control mountain density
+        generateMountain(
+          xChunk,
+          yChunk,
+          mapWidth,
+          mapHeight,
+          zLevel,
+          tileArea.tiles,
+        );
       }
     }
   }
@@ -71,15 +95,25 @@ function generateTerrain(mapData, zLevel, chunkSize, mapWidth, mapHeight) {
 const mapData = otbm2json.read("lava.otbm");
 const zLevel = 7;
 const chunkSize = 256;
-const newTileAreas = generateTerrain(mapData, zLevel, chunkSize, mapWidth, mapHeight);
+const newTileAreas = generateTerrain(
+  mapData,
+  zLevel,
+  chunkSize,
+  mapWidth,
+  mapHeight,
+);
 
-mapData.data.nodes.forEach(function(node) {
-  node.features = node.features.filter(feature => {
-    return !(feature.type === otbm2json.HEADERS.OTBM_TILE_AREA && feature.z === zLevel);
+mapData.data.nodes.forEach(function (node) {
+  node.features = node.features.filter((feature) => {
+    return !(
+      feature.type === otbm2json.HEADERS.OTBM_TILE_AREA && feature.z === zLevel
+    );
   });
 
   node.features = node.features.concat(newTileAreas);
 });
 
 otbm2json.write("border-mountain.otbm", mapData);
-console.log("border-mountain map for level 7 has been written to border-mountain.otbm");
+console.log(
+  "border-mountain map for level 7 has been written to border-mountain.otbm",
+);

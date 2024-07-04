@@ -28,13 +28,13 @@ let tileAreas = [];
 const chunkSize = 256;
 for (let xChunk = 0; xChunk < mapWidth; xChunk += chunkSize) {
   for (let yChunk = 0; yChunk < mapHeight; yChunk += chunkSize) {
-    zLevels.forEach(z => {
+    zLevels.forEach((z) => {
       const tileArea = {
         type: otbm2json.HEADERS.OTBM_TILE_AREA,
         x: xChunk,
         y: yChunk,
         z: z,
-        tiles: []
+        tiles: [],
       };
 
       for (let x = 0; x < chunkSize; x++) {
@@ -49,14 +49,14 @@ for (let xChunk = 0; xChunk < mapWidth; xChunk += chunkSize) {
               x: tileX % 256,
               y: tileY % 256,
               tileid: GRASS_TILE, // Set grass tile
-              items: []
+              items: [],
             };
 
             // On 1/4th of all tiles put a random tree
             if (Math.random() < 0.25) {
               tile.items.push({
                 type: otbm2json.HEADERS.OTBM_ITEM,
-                id: randomTree()
+                id: randomTree(),
               });
             }
 
@@ -71,7 +71,7 @@ for (let xChunk = 0; xChunk < mapWidth; xChunk += chunkSize) {
 }
 
 // Replace existing tile areas with new ones
-mapData.data.nodes.forEach(function(node) {
+mapData.data.nodes.forEach(function (node) {
   node.features = tileAreas;
 });
 
@@ -79,4 +79,3 @@ mapData.data.nodes.forEach(function(node) {
 otbm2json.write("forest.otbm", mapData);
 
 console.log("Forest map has been written to forest.otbm");
-

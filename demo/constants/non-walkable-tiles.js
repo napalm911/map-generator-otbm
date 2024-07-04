@@ -11,5 +11,5 @@ module.exports = {
   SHALLOW_WATER,
   TAR,
   LAVA,
-  SWAMP
+  SWAMP,
 };
