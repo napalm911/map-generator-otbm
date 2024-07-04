@@ -3,7 +3,8 @@ const otbm2json = require("./lib/otbm2json");
 // Define constants for tile and item IDs
 const GRASS_TILE = 4526;
 const TREE_IDS = [2701, 2702, 2703, 2704, 2705, 2706];
-
+const HOLE = 470;
+const OPEN_HOLE = 469;
 
 // Function to get a random tree ID
 function randomTree() {

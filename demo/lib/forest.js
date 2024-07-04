@@ -13,8 +13,8 @@ function addTree(tile) {
   });
 }
 
-function generateForest(tile, caveMap, tileX, tileY) {
-  if (caveMap[tileX][tileY] === 0 && Math.random() < 0.25) {
+function generateForest(tile, mazeMap, tileX, tileY) {
+  if (mazeMap[tileX][tileY] === 0) {
     addTree(tile);
   }
 }
