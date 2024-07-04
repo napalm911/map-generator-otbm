@@ -25,4 +25,5 @@ function generateForest(tile, mazeMap, tileX, tileY) {
 
 module.exports = {
   generateForest,
+  randomTree
 };
